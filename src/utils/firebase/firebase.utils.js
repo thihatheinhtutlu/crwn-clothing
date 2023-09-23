@@ -4,6 +4,7 @@ import {
     sigInWithRedirect, 
     signInWithPopup, 
     GoogleAuthProvider,
+    createUserWithEmailAndPassword
 } from 'firebase/auth';
 import { 
     getFirestore,
@@ -33,9 +34,15 @@ export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth,provider);
   
 
+
 export const db = getFirestore();
 
-export const createUserDocumentFromAuth = async (userAuth) => {
+export const createUserDocumentFromAuth = async (
+    userAuth, 
+    additionalInformation = {displayName: ''}
+    ) => {
+    if (!userAuth) return;
+    
     const userDocRef = doc(db, 'users', userAuth.uid);
     //  response ko console logged lote pee object htl ka uid ko pyan use dar
 
@@ -55,7 +62,8 @@ export const createUserDocumentFromAuth = async (userAuth) => {
             await setDoc(userDocRef, {
                 displayName,
                 email,
-                createdAt
+                createdAt,
+                ...additionalInformation,
             });
         } catch (error) {
             console.log('error creating the user', error.messsage);
@@ -65,3 +73,11 @@ export const createUserDocumentFromAuth = async (userAuth) => {
 };
 
 // getDoc allows us to get the doc, setDoc allows us to set the doc 
+
+
+
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+    if(!email || !password) return;
+
+    return await createUserWithEmailAndPassword(auth, email, password);
+};
