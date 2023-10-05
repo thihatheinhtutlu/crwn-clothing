@@ -2,7 +2,6 @@ import Directory from "../../components/directory/directory.component";
 
 
 const Home = () => {
-
   const categoreis = [
     {
       "id": 1,
