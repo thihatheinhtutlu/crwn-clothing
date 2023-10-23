@@ -1,6 +1,6 @@
 import { Fragment, useContext } from "react";
 import { Outlet, Link } from "react-router-dom";
-import './navigation.styles.scss';
+import { NavigationContainer, NavLinks, NavLink, LogoContainer } from './navigation.styles';
 
 import { UserContext } from "../../contexts/user.context";
 import { CartContext } from "../../contexts/cart.context";
@@ -22,30 +22,30 @@ const Navigation = () => {
     
     return (
       <Fragment>
-        <div className="navigation">
-            <Link className="logo-container" to='/' >
+        <NavigationContainer>
+            <LogoContainer to='/' >
                  <CrwnLogo className="logo" />
-            </Link>
-            <div className="nav-links-container">
-                <Link className="nav-link" to='/shop'>
+            </LogoContainer >
+            <NavLinks>
+                <NavLink to='/shop'>
                     SHOP
-                </Link>
-                { 
-                // ? so dar shi kae yin : so dar m shi kae yin 
-                  currentUser ? (
-                    <span className="nav-link" onClick={signOutHandler}> SIGN OUT </span>
+                </NavLink>
+                 
+                {/* ? so dar shi kae yin : so dar m shi kae yin  */}
+                {  currentUser ? (
+                    <NavLink onClick={signOutHandler}> SIGN OUT </NavLink>
                   ) : ( 
-                    <Link className="nav-link" to='/auth'> SIGN IN </Link>
+                    <NavLink to='/auth'> SIGN IN </NavLink>
                   )
                 }
                 <CartIcon/>
                
-            </div>
+            </NavLinks>
             {/* && so dar ka ashae ka staement ka true so yin 
                 nout ka har ko return mal,
                 m ture woo so yin m return woo */}
             {isCartOpen && <CartDropdown/>}
-        </div>
+        </NavigationContainer>
         <Outlet/>
       </Fragment>
     );
