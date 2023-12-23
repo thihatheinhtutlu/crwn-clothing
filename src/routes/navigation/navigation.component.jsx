@@ -36,7 +36,7 @@ const Navigation = () => {
                 {  currentUser ? (
                     <NavLink onClick={signOutHandler}> SIGN OUT </NavLink>
                   ) : ( 
-                    <NavLink to='/auth'> SIGN IN </NavLink>
+                    <NavLink to='/auth'> SIGNIN </NavLink>
                   )
                 }
                 <CartIcon/>
